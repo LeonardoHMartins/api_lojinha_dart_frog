@@ -1,0 +1,61 @@
+generator client {
+  provider = "dart run orm"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model usuario {
+    id Int @id @default(autoincrement())
+    codigo Int 
+    admin Int? @default(0) @db.TinyInt
+    imagem String @db.LongText
+    nome String 
+    telefone String 
+    total_gasto Float? @default(0)
+    quantidade Int? @default(0)
+    status Int? @default(1) @db.TinyInt
+    created_at DateTime? @db.Timestamp(0)
+    updated_at DateTime? @db.Timestamp(0)
+
+} 
+
+
+model produto {
+    id Int @id @default(autoincrement())
+    nome String @db.VarChar(255)
+    valor Float 
+    codigo_barra String @db.VarChar(255)
+    quantidade Int? @default(0)
+    imagem String @db.LongText
+    status Int? @default(1) 
+    created_at DateTime? @db.Timestamp(0)
+    updated_at DateTime? @db.Timestamp(0)
+    
+
+}
+
+model usuario_produto_historico {
+    id Int @id @default(autoincrement())
+    usuario_id Int @db.Int 
+    produto_id Int @db.Int
+    produto_nome String @db.VarChar(255)
+    produto_quantidade Int @db.Int 
+    produto_imagem String @db.LongText
+    produto_valor Float  
+    status Int @db.TinyInt @default(1)
+    created_at DateTime @db.Timestamp(0)   
+}
+
+model usuario_codigo_wzap {
+    id Int @id @default(autoincrement())
+    usuario_id Int @db.Int
+    codigo_wzap String @db.VarChar(255)
+    status Int @db.TinyInt @default(0)
+    created_at DateTime? @db.Timestamp(0)
+    
+
+}
